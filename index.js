@@ -24,7 +24,7 @@ app.post('/', async (req, res) => {
 
 const publishMessage = async (report) => {
     const buffer = Buffer.from(JSON.stringify(report))
-    const messageId = await pubsub.topic('projects/abrex-323807/topics/email-notification').publish(buffer)
+    const messageId = await pubsub.topic(process.env.TOPIC).publish(buffer)
     console.log('confirmed ', messageId)
 }
 
