@@ -7,10 +7,24 @@ const { PubSub } = require('@google-cloud/pubsub')
 const pubsub = new PubSub()
 const dotenv = require('dotenv')
 dotenv.config()
+const swaggerJsdoc = require('swagger-jsdoc')
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./api/swagger.json')
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+/**
+ * @openapi
+ * /:
+ *  post:
+ *    description: use to post email notification
+ *    responses:
+ *      '200':
+ *        description: A successful published event
+ */
 app.post('/', async (req, res) => {
     try {
          const report = req.body
